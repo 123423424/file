@@ -1,0 +1,1986 @@
+<?php   defined('_JEXEC') or die;   
+
+//$_SESSION ['code'] = $x;
+//echo $_SESSION ['code']."- три<br />";
+
+     /*
+$session     	= &JFactory::getSession();                
+$code=$session->get('myKey');*/
+//echo "тут - ".$code."<br />";
+/*
+echo "<pre>";
+//echo print_r($app['options']);
+echo "<hr />";
+echo "kiki -";
+echo $_SESSION;
+
+echo "</pre>";
+*/
+
+
+///При первом входе на сайт
+if (!$_SESSION['n_raz']) {
+    $_SESSION['n_raz'] = 1;
+    } 
+    
+$n_raz =$_SESSION['n_raz'];
+$n_rep = 7;//Количество повторений
+$n_r = $n_raz%$n_rep;
+//$n_r=1;// удали
+
+/*
+if ($n_r == 1) {
+
+        if($_POST['kapcha'] != $_SESSION['rand_code']) echo "НЕЕ верно<br />";
+        else echo "аГа<br />";
+        echo $_POST['kapcha'].'<br />';
+        echo  $_SESSION['rand_code'].'- $_SESSION<br />';
+        echo  $_COOKIE['rand_code'].' - $_COOKIE<br />';
+        
+        $string = "";
+        	for ($i = 0; $i < 5; $i++)
+        		$string .= chr(rand(97, 122));
+        $_SESSION['rand_code'] = $string; 
+        echo  $_SESSION['rand_code'].'<br />';
+        
+        setcookie('rand_code', $_SESSION['rand_code'], time() + (60 * 60 * 24 * 30)); 
+        
+        
+        echo "<hr />";
+        echo  $_SESSION['rand_code'].'- $_SESSION<br />';
+        echo  $_COOKIE['rand_code'].' - $_COOKIE<br />';
+        
+    }
+
+*/
+
+//Вниз идет начало ЕМЕИЛ АВТОРА ЗАПОМНИТЬ В ОТПРАВКИ ЗАЯВКИ
+	if (!empty($_POST['email'])) {  	   
+       $_SESSION['n_raz'] ++;
+            $email= $_POST['email'];
+            if($email !=$_SESSION['EMAIL_author']){
+                $_SESSION['EMAIL_author'] = $email; 
+                setcookie('EMAIL_author', $email, time() + (60 * 60 * 24 * 30));
+            } // header('Location: '.$_SERVER["HTTP_REFERER"]);           
+        }
+    
+if (!$_SESSION['EMAIL_author']) {    $_SESSION['EMAIL_author'] = $_COOKIE['EMAIL_author']; } 
+$EMAIL_author = $_SESSION['EMAIL_author'];
+
+
+//ВВерх идет внедренее
+
+
+
+    $nID =session_id(); 
+
+
+?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>">
+<!--  /joomte  Автомат 8 на локалки 21 июня 2012-->
+<head>
+<meta name='yandex-verification' content='5c4b7e8ce72e9e51' />
+<meta name='xxx' content='
+
+' />
+<jdoc:include type="head" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    
+    
+    
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template;?>/css/system.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template;?>/css/general.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/glavnaia.css" type="text/css" />
+<!--[if lte IE 6]>
+<link href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/ieonly.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<?php if($this->direction == 'rtl') : ?>
+	<link href="<?php echo $this->baseurl ?>/templates/rhuk_milkyway/css/template_rtl.css" rel="stylesheet" type="text/css" />
+<?php endif; ?>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33749054-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+   
+    var $clone = '';
+
+    $(document).ready(function(){
+        $('li.fileUpload').addClass('hiddenInput').hide().append('<span class="delInput">Удалить</span>');
+        $('.delInput').hide('slow');
+        $('li.fileUpload:first').removeClass('hiddenInput').addClass('visibleInput').show('slow');
+        $('li.fileUpload:last').after('<div class="addMore">Добавить еще</div>')
+
+        $('.addMore').click(function() {
+            $('li.hiddenInput:first').removeClass('hiddenInput').addClass('visibleInput').show('slow');
+            if($('li.fileUpload').length == $('li.visibleInput').length)
+                $(this).hide('slow');
+            $('.delInput').show('slow');
+        })
+
+        $('.delInput').click(function() {
+            if($('li.fileUpload').length > 1)
+                $(this).parent('li.visibleInput').addClass('hiddenInput').removeClass('visibleInput').hide('slow');
+            $('.addMore').show('slow');
+            $clone = $(this).parent('li.hiddenInput').children('.formBody').children('input[type="file"]');
+            $clone.replaceWith( $clone.val('').clone( true ) );
+            if($('li.visibleInput').length == 1)
+                $('.delInput').hide('slow');
+            else
+                $('.delInput').show('slow');
+        })
+    })
+
+
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+	var analyticsFileTypes = ['js',''];
+	var analyticsEventTracking = 'enabled';
+</script>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-917891-1']);
+        _gaq.push(['_addDevId', 'i9k95']); // Google Analyticator App ID with Google 
+        
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+
+<script type="text/javascript" src="prettify.js"></script>
+<script type="text/javascript">
+	jQuery(function($) {	    
+		$("pre,code").addClass('prettyprint');
+		prettyPrint();
+	});
+</script>
+
+<!-- ТУТ проверка -->
+<script type="text/javascript">
+	function www(vol)
+    {   
+        alert(""+vol+"");
+        /*var x = '"'+vol+'"';
+        alert(x);*/
+    }
+</script>
+
+
+
+
+<?php
+
+if($_POST['text'])  {
+    $text= htmlspecialchars ($_POST['text']);
+    $cost= htmlspecialchars ($_POST['cost']) *1;
+    $comment= htmlspecialchars ($_POST['comment']);
+    $email= htmlspecialchars ($_POST['email']);
+    $date= htmlspecialchars ($_POST['date']);
+    
+    
+    
+    $result_capcha = 'onload="setPause()"'; 
+    
+     //Если была капча 
+    if ($n_r == 1) {
+            if(isset($_POST['captcha_code']) && (!$_POST['captcha_code'])){ 
+                    	$n_r = 1; // повторить капчу
+                        $otvet .= "Введите символы изображенные на картинке!";    
+                        $result_capcha = 'onload="errMess('."'$otvet')".'"';
+                        
+                      
+                }
+            if (isset($_POST['captcha_code'])&& ($_POST['captcha_code'])){    
+                                          
+                              $nID =session_id();                         
+                             ///
+                                 // Имя файла, в котором хранится счетчик
+                                $file_counterS = "cap/counterS_$nID.txt";
+                                
+                                // Читаем текущее значение счетчика
+                                if (file_exists($file_counterS)) {
+                                    $fp = fopen($file_counterS, "r");
+                                    $counter = fread($fp, filesize($file_counterS));
+                                    fclose($fp);
+                                } else {
+                                    $counter = 7750;
+                                }
+                                
+                                $code= $counter; 
+                                 ///
+                            
+                            
+                            
+                            $p_code=$_POST['captcha_code'];
+                            if($p_code!=$code)
+                                {
+                                $n_r = 1; // повторить капчу
+                                $otvet .= "Символы введены не верно.";// $p_code!=$code - code ";      
+                                $result_capcha = 'onload="errMess('."'$otvet')".'"';
+                                               
+                                }
+                            else
+                                {             
+                                $result_capcha = 'onload="setPause()"';
+                                // делаем все что должно быть,
+                                //если капча введена верно
+                                }          
+                 } 
+            }
+            
+         if ($result_capcha == 'onload="setPause()"') {
+           
+           //////
+             $from = $email; //От кого
+             //$from = 'we_work_for_you@avtomat5.ru'; //От кого
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+            $subject = "=?utf-8?b?" . base64_encode("$text. Заявка (Avtomat)N") . "?=";             
+            $headers .= 'From: "'.$from.'" <'.$from.'>' . "\r\n"; 
+            //Письмо для НАС
+            //$filename = "form.txt"; //Имя файла для прикрепления
+            $to = "bid@avtomat5.ru"; //Кому            
+            $subject = "$text. Заявка (Avtomat)N"; //Тема            
+            $message = " Cтоимость: $cost. Срок: $date. Комментарий: $comment."; //Текст письма
+            
+             //Убераем из письма Windows переносы, из-за них изменяется тело письмм и  письма попадают в спам
+            $message_ch ="";
+            $message_r ="";
+            $message_r = explode("\r", $message);        
+            foreach ($message_r  as $value ){  $message_ch .= $value."\n"; }
+            $message = $message_ch;            
+            
+            
+            //$boundary = "---"; //Разделитель
+            /* Заголовки */
+                      
+            //$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"";
+            mail($to, $subject, $message, $headers); //Отправляем письмо
+                
+                        
+                $conf = new JConfig;                
+                $dbc_m = mysqli_connect($conf->host, $conf->user, $conf->password, $conf->db) or die(mysql_error());
+                
+                //mysqli_select_db($dbc, DB_NAME) or die(mysql_error());      
+                /* проверка соединения */
+                if (mysqli_connect_errno()) {
+                    printf("Не удалось подключиться: %s\n", mysqli_connect_error());
+                    exit();
+                }
+                /* изменение набора символов на utf8 */
+                if (!mysqli_set_charset($dbc_m, "utf8")) {
+                    printf("Ошибка при загрузке набора символов utf8: %s\n", mysqli_error($dbc_m));
+                }
+                
+                $orders_autors_tabel = $conf->dbprefix.$conf->orders_autors_tabel;
+               // mysqli_query($dbc,"SET NAMES 'cp1251'");
+                $query = "INSERT INTO `$orders_autors_tabel` (`id`, `nomer`, `prise`, `time`, `description`, `email`, `time_request`, `explanations`) 
+                                                        VALUES (NULL, '$text', '$cost', '$date', '$comment',   '$email',  NOW(),              NULL)";
+                $result = mysqli_query($dbc_m, $query);
+            
+
+            
+            
+            //Отправляем АВТОРУ   
+            $from = 'we_work_for_you@avtomat5.ru'; //От кого
+            
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+            $subject = "=?utf-8?b?" . base64_encode("$text. Заявка(Avtomat)N") . "?=";             
+            $headers .= 'From: "Avtomt5" <'.$from.'>' . "\r\n"; 
+            
+            
+                     
+            //$filename = "form.txt"; //Имя файла для прикрепления
+            $to = $email; //Кому           
+            
+            //$message2 = "Стоимость $cost  \n Комменатрий $comment  \n Номер проекта $text "; //Текст письма
+            $message ="<p>Это письмо отправлено автоматически и отвечать на него не обязательно. </p>
+<p>Ваша заявка на проект №  $text  получена <br />
+  Вы назначили стоимость за проект: $cost <br />
+  Срок: $date<br />
+  Как правило ответ от клиента приходит в течение 3 дней <br />
+  Все вопросы можете отправить ответом на это письмо <br />
+  Спасибо <br />
+  Автомат5+<br />
+  <br />
+  <strong>Часто задаваемые  вопросы:</strong><br />
+  <strong><em>Как узнать, что меня назначили  автором?</em></strong><br />
+  Работа  с авторами происходит по почте. Вам обязательно сообщат о том,   что Вас назначили  автором и согласуют сроки выполнения. Пример нашего   сообщения: «Здравствуйте,  по этому заказу клиент дал согласие,   подтвердите.» Не нужно выполнять проект без данного сообщения.<br />
+  <strong><em>Что делать если  Вы отправили много заявок, но ни на один проект Вас не назначили автором?</em></strong><br />
+  Это  может быть следствием нескольких причин:</p>
+<ol>
+  <li><em>Вы не правильно указали емеил.</em> Если на какую-нибудь заявку к  Вам на почту не пришло подобное подтверждение, значит емеил указан не верно. </li>
+  <li><em>Клиент отказался или пока  думает.</em> В  большенстве случаев, срок, в течение которого клиент дает ответ, может быть в  диапазоне от мгновенного до 7 дней.</li>
+  <li><em>Назначенная Вами стоимость за  проект очень высока.</em> Как   правило, многие начинающие авторы оценивают проект исходя из времени,    которое они рассчитывают на него потратить. Но, важно помнить, что   вместе с  Вами могли подать заявку другие исполнители, которые уже   выполняли подобный  проект и время им придется затратить на него меньше.   Поэтому рекомендуем, если  Вы хотите начать сотрудничать, назначьте   стоимость первых проектов минимально  допустимой. </li>
+</ol>";
+            
+            //Убераем из письма Windows переносы, из-за них изменяется тело письмм и  письма попадают в спам
+            $message_ch ="";
+            $message_r ="";
+            $message_r = explode("\r", $message);        
+            foreach ($message_r  as $value ){  $message_ch .= $value."\n"; }
+            $message = $message_ch;            
+            
+            //Проверка на почту @gmail.com
+                $haystack = $to;
+                $needle   = '@gmail.com';                
+                $pos      = strripos($haystack, $needle);                
+                if ($pos === false) {
+                            // не является @gmail.com 
+                             mail($to, $subject, $message, $headers); //Отправляем письмо                        
+                            } 
+                                        
+         }  
+         
+
+        
+    }	
+      
+?>
+</head>
+
+<body id="height" <?=$result_capcha?>>
+<div id="qqqqq">
+
+<script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=iMTQsMRw23o97*XFZ9ektjZKdMBnMjrFY7vfBPl6nyR5nhJWPPNrJygZrOYq/ggD3nMjfSDRJqKzhtFjC*691yUePMiusbmNpGOT/AS4jk/GVrmLwK7qWFPf7J7/IBsH8Y6Q/91/p1klx/PLgjLrR*6kthrYXn56fJvMYpPrOvA-';</script>
+</div>
+<!-- оператор он-лайн //onload="aaa(12)" // onload="www('ggg')"
+<div id="chat">
+<form method="POST" accept-charset="utf-8" id="siteheart_button_464974" action="https://siteheart.com/webconsultation/464974?s=1" target="siteheart_button_464974" >
+<input type="hidden" name="_charset_">
+<input type="hidden" name="data[your_name]" value="your_value"/>
+<input type="hidden" name="data[Логин]" value="demo"/>
+
+<img src="http://webindicator.siteheart.com/webindicator/image/1333916710?ent=464974&company=464974"  border="0" style="cursor:pointer;" alt="SiteHeart" onclick="window.open('about:blank','siteheart_button_464974','width=500,height=400,resizable=1') ;document.getElementById('siteheart_button_464974').submit();"/>
+</form>
+</div>-->
+
+
+
+<div id="all">
+
+	<div id="header">
+		<div id="logo">
+		
+			<?php 
+	
+		$textPr= $_SERVER ["REQUEST_URI"] ;
+       	$textOt= stristr($textPr, 'zakazavtor');
+           
+         
+     //Первый модуль ТУТ    
+  if(!stristr($textPr, 'zakazavtor') === FALSE) 
+ 	{  ?>
+          
+     <a href="/zakazavtor.html">5+ автомат</a>
+				</div>	
+		<div id="tele">
+		<a href="/zakazavtor.html"></a>
+        
+		</div>
+        </div>
+	<div id="headers">
+	<div id="headera">
+	<a href="mailto:avtomat.sibstrina@gmail.com"> email: avtomat.sibstrina@gmail.com </a>   
+	
+	<!--Общий -->    
+	</div>	
+	</div>
+
+	<div id="left">   
+	<!--Общий -->	
+		<div id="leftb">
+		<jdoc:include type="modules" name="leftb" style="xhtml"  />		
+
+		</div>	
+
+		<div class="leftc">		
+		</div>	
+	
+	</div>
+	
+	 
+    <div id="contener2">   	
+	<!--Общий -->
+	
+		<jdoc:include type="component" />
+<jdoc:include type="modules" name="comp" style="xhtml"  />		
+	</div>
+
+	<!--Общий -->
+    
+    
+    
+    
+
+	<div id="tex">
+	<jdoc:include type="modules" name="tex" style="xhtml"  />
+
+	</div>
+
+	
+
+
+</div>
+<div id="footer1">
+</div>
+<div id="footer">
+
+<div class="otz"><!--
+<a href="http://avtomat5.reformal.ru" onclick="Reformal.widgetOpen();return false;" onmouseover="Reformal.widgetPreload();">Oтзывы и предложения о сайте</a><script type="text/javascript">
+    var reformalOptions = {
+        project_id: 67750,
+        show_tab: false,
+        project_host: "avtomat5.reformal.ru"
+    };
+    
+    (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript'; script.async = true;
+        script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'media.reformal.ru/widgets/v3/reformal.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    })();
+</script><noscript><a href="http://reformal.ru"><img src="http://media.reformal.ru/reformal.png" /></a><a href="http://avtomat5.reformal.ru">Oтзывы и предложения для Дипломы на заказ</a></noscript>	-->
+<a href="http://avtomat5.reformal.ru" onclick="Reformal.widgetOpen();return false;" onmouseover="Reformal.widgetPreload();">Есть идеи? Выскажите их!...</a><script type="text/javascript">
+    var reformalOptions = {
+        project_id: 67750,
+        show_tab: false,
+        project_host: "avtomat5.reformal.ru"
+    };
+    
+    (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript'; script.async = true;
+        script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'media.reformal.ru/widgets/v3/reformal.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    })();
+</script><noscript><a href="http://reformal.ru"><img src="http://media.reformal.ru/reformal.png" /></a><a href="http://avtomat5.reformal.ru">Есть идеи? Выскажите их!...</a></noscript>
+
+
+
+</div> 
+	<jdoc:include type="modules" name="foot" style="xhtml"  />
+	
+
+	
+	</div>	
+    
+    
+	
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter14943550 = new Ya.Metrika({id:14943550, enableAll: true, webvisor:true});
+        } catch(e) {}
+    });
+    
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/14943550" style="position:absolute; left:-9999px;" alt="" /></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+<!-- RedHelper -->
+<script id="rhlpscrtg" type="text/javascript" charset="utf-8" async="async" src="http://web.redhelper.ru/service/main.js?c=maksimkostuk"></script>
+<!--/Redhelper -->
+
+
+<!--Вперед Начало ТУТ-->
+<link rel="stylesheet" type="text/css" href="style.css" /> 
+	
+<script>
+    var nomer= 0;
+    var otvet = 1;
+    function aaa(value)	  
+    {	
+        if (nomer==0){ //Показать всплывающее окно
+            //$("#Page12").slideToggle("slow");
+           $("#Page12").fadeIn(300);                 
+           $(".table_autor").fadeIn(1000);
+           //  $("#Page12").toggle();
+           // document.getElementById('Page'+value).style.display="block"; 
+            nomer=1; 
+            document.getElementById('height').style.overflow="hidden";                
+            return}
+        if (nomer==1){ //Закрыть всплывающее окно             
+            $("#Page12").toggle();
+            //document.getElementById('Page'+value).style.display=""; 
+            nomer=0; 
+            document.getElementById('height').style.overflow="";  
+            return}
+    } 
+    
+    
+    function setPause()
+    {
+        $("#Page12").fadeIn(300);   
+        $(".table_autor").fadeIn(1000);           
+        document.getElementById('sent_form').style.display="none";  
+        document.getElementById('sent').style.display="block"; 
+        setTimeout(setClose,3500)
+    }
+    
+    function setClose() 
+    {
+        document.getElementById('Page12').style.display=""; 
+        document.getElementById('height').style.overflow="";
+        nomer=0; 
+    }
+    
+    function validation()
+    {   
+        var o1=0; var o2=0;
+        var z=forma.elements.cost.value;        
+        if (isNaN(z) || !z) { document.getElementById('err_msg1').innerHTML= "Должно быть числом"; } else { document.getElementById('err_msg1').innerHTML= ""; o1=1;}                
+        var r = /[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?/;
+        if ((!r.test(document.forma.email.value)) ||(!document.forma.email.value)) { document.getElementById('err_msg2').innerHTML= "Введен не правильный Email<br /> Пример: xxxx@mail.ru"; } else { document.getElementById('err_msg2').innerHTML= ""; o2=1;}
+        if(o1 == 1){if(o2 == 1){return true;}} else {return false;}
+    }
+    
+    
+    
+    function checkForm1()
+    {  var ret =  validation();
+       if (ret){document.forma.submit();}
+       
+    }
+    
+    function errMess(vol)
+    {   
+        var err = document.getElementById('err_msg');
+        err.innerHTML=""+vol+"";
+        err.onload = aaa(12);
+    }
+        
+        
+    </script>
+    <div id="Page12">   
+        <script type="text/javascript">    
+                                      var z= document.getElementById('name_nomer').innerHTML;                   
+                                     
+        </script>   
+                <div class="fon"></div>                
+                <div class="table_autor">
+                    <div id="sent"><input class="table_button2" type="button" onclick="setClose()" value="Х"/>
+                    Спасибо. Ваша заявка отправлена.<br /> Вам должно прийти подтверждение на почту.</div>
+                    <div id="sent_form">
+                        <form name="forma" action="<?=$_SERVER["REQUEST_URI"]?>" method="POST">
+                        <input class="table_button2" type="button" onclick="aaa(12)" value="Х"/> 
+                        <div class="centr big_h">   Номер заказа  
+                                    <script type="text/javascript">                                                   
+                                    document.writeln(z); 
+                                    </script>  
+                        </div>
+                        
+                        <table class="table_offer">
+                             <tr><td colspan="2">   <textarea  id="textarea1" rows="1" cols="30" hidden name="text"></textarea>                            
+                                <script type="text/javascript">                   
+                                 document.getElementById('textarea1').innerHTML =  z;
+                                </script>
+                             </td> </tr>
+                             
+                            <tr><td>Ваша цена (руб.): </td>    <td><input type="text" class="explanations"  name="cost" onblur="validation(this.form)" value="" /><div id="err_msg1"  class="err_s"></div></td> </tr>
+                            <tr><td>Срок выполнения (дней): </td>  <td><input type="text" class="explanations"  name="date" /></td>  </tr>
+                            <tr><td>Комментарий: </td>  <td>
+                            <textarea  class="explanations" rows="3" cols="20"  name="comment"></textarea></td>  </tr>
+                            <tr><td>Email:</td>         <td><input type="text" class="explanations"  name="email"  onblur="validation(this.form)" value="<?=$EMAIL_author?>"/><div id="err_msg2" class="err_s"></div></td> </tr>
+                           <?php
+                                         
+                    	if ($n_r == 1) { 
+                    	   
+                           
+                    ?> <tr><td>Проверчный код: </td>  <td> <img src = "/captcha.php?cap=<?=$nID ?>" id="captcha" /></td>  </tr>
+                    <tr><td>Введите код на картинки: </td>  <td> <input type="text" name="captcha_code" /><div id="err_msg"  class="err_s"></div></td></tr>
+                      <?php                     
+                    	  }
+                    ?>
+                            
+                            <tr><td colspan="2" class="centr" > <input type="button" name="application" class="table_button" onclick="checkForm1(this.form)"  value="Отправить"/>
+                            </td> </tr>
+                        </table>
+                        
+                        
+                        </form> 
+                    </div>                    
+                </div>
+                       
+        </div>
+    
+    <!--Назад конец -->
+ 
+<?php
+
+
+	//ТУТ alert("TEXT
+?>
+ <?php // echo '<script>alert("TEXT '.$otvet.'")</script>'; 
+ ?>
+
+<script type="text/javascript"> 
+$(document).ready(function(){
+    var $i_s = 1;
+    
+    function Changing(k_width, k_height)	  
+    {    
+    $(".knopka-avtora").animate({
+        width: k_width + "px",
+        height: k_height + "px"
+        }, 1500 );       
+    }   
+       
+     function launching (){
+        if ($i_s == 1) {            
+        Changing (227,84);
+        $i_s = 2;       
+        } else {
+         $i_s = 1; 
+         Changing (206,76); 
+         
+        }
+     }
+     setInterval(launching, 2000); 
+  });
+
+                                             
+  
+
+</script> 
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+    
+</body>
+</html>
+
+
+<!--/*
+http://avtomat5/index.php?option=com_xmap&sitemap=1 
+
+
+
+<div class="formCaption2">{ContactBy copy:caption}</div>
+
+		<div class="formBodyq">{ContactBy copy:body}<span class="formClr">{ContactBy copy:validation}</span></div>*/-->
+        
+        
+	<?php 
+    
+
+    
+    }   
+	
+	/// ВВЫШЕ  РАЗДЕЛ ДЛЯ АВТОРОВ
+	
+
+    
+    
+    
+    
+    
+	/// НИЖЕ РАЗДЕЛ ДЛЯ КЛИЕНТОВ
+	else {  ?>	 
+	
+        <a href="/">5+ автомат</a>
+				</div>	
+		<div id="tele">
+		<a href="/"></a>
+        
+		</div>
+        </div>
+	<div id="headers">
+	<div id="headera">
+	<a href="mailto:3802200@mail.ru"> email: 3802200@mail.ru </a>   
+			
+	 <!--Общий -->
+    
+	</div>	
+	</div>
+
+	<div id="left">
+	
+	 
+		<div id="lefta">
+		<jdoc:include type="modules" name="left" style="xhtml"  />
+		</div> 	
+	
+	<!--Общий -->
+	
+		<div id="leftb">
+		<jdoc:include type="modules" name="leftb" style="xhtml"  />	
+		
+
+		</div>	
+
+		<div class="leftc">
+		
+
+
+
+
+		</div>	
+	
+	</div>
+	
+	 
+	<div id="contener">
+    
+	
+	
+	<!--Общий -->
+	
+		<jdoc:include type="component" />
+<jdoc:include type="modules" name="comp" style="xhtml"  />		
+	</div>
+
+	
+	 
+	<div id="right">
+	<jdoc:include type="modules" name="right" style="xhtml"  />
+		
+	  <div id="righta">
+	  <a href="/заказать-работу.html"><h3>Узнать стоимость </h3>
+		
+		<p class="tri">заказать работу </p>
+		</a>
+		</div>
+	<div id="righta2">
+	  <a href="/Микронаушник.html"><h3>Микронаушник</h3>
+		
+		</a>
+		</div>		
+		
+		
+		<div id="rightb">
+		
+		<a href="/стать-автором.html">
+		<h3>Вы - автор? </h3>
+		<p class="tri">регистрация (резюме)</p>
+		</a>	
+		</div>		
+	
+		<div id="rightc">
+		
+
+	<jdoc:include type="modules" name="rightc" style="xhtml"  />
+			
+		</div>	
+	
+	
+	
+			
+	</div>  
+	
+	<!--Общий -->
+
+	<div id="tex">
+	<jdoc:include type="modules" name="tex" style="xhtml"  />
+    
+	</div>
+
+	
+
+
+</div>
+<div id="footer1">
+</div>
+<div id="footer">
+
+<div class="otz"><!--
+<a href="http://avtomat5.reformal.ru" onclick="Reformal.widgetOpen();return false;" onmouseover="Reformal.widgetPreload();">Oтзывы и предложения о сайте</a><script type="text/javascript">
+    var reformalOptions = {
+        project_id: 67750,
+        show_tab: false,
+        project_host: "avtomat5.reformal.ru"
+    };
+    
+    (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript'; script.async = true;
+        script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'media.reformal.ru/widgets/v3/reformal.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    })();
+</script><noscript><a href="http://reformal.ru"><img src="http://media.reformal.ru/reformal.png" /></a><a href="http://avtomat5.reformal.ru">Oтзывы и предложения для Дипломы на заказ</a></noscript>	-->
+<a href="http://avtomat5.reformal.ru" onclick="Reformal.widgetOpen();return false;" onmouseover="Reformal.widgetPreload();">Есть идеи? Выскажите их!...</a><script type="text/javascript">
+    var reformalOptions = {
+        project_id: 67750,
+        show_tab: false,
+        project_host: "avtomat5.reformal.ru"
+    };
+    
+    (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript'; script.async = true;
+        script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'media.reformal.ru/widgets/v3/reformal.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    })();
+</script><noscript><a href="http://reformal.ru"><img src="http://media.reformal.ru/reformal.png" /></a><a href="http://avtomat5.reformal.ru">Есть идеи? Выскажите их!...</a></noscript>
+
+
+
+</div> 
+	<jdoc:include type="modules" name="foot" style="xhtml"  />
+	
+
+	
+	</div>	
+	
+
+	
+	
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter14943550 = new Ya.Metrika({id:14943550, enableAll: true, webvisor:true});
+        } catch(e) {}
+    });
+    
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/14943550" style="position:absolute; left:-9999px;" alt="" /></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+<!-- RedHelper -->
+<script id="rhlpscrtg" type="text/javascript" charset="utf-8" async="async" src="http://web.redhelper.ru/service/main.js?c=maksimkostuk"></script>
+<!--/Redhelper -->
+
+<script type="text/javascript" src="jquery.maskedinput-1.3.1.min_.js"></script>
+<script type="text/javascript">// <![CDATA[
+jQuery(function($) {
+      $.mask.definitions['~']='[+-]';
+      $('#date').mask('99/99/9999');
+      $('#z9').mask('+7(999) 999-99-99');
+      $('#phoneext').mask("(999) 999-9999? x99999");
+      $("#tin").mask("99-9999999");
+      $("#ssn").mask("999-99-9999");
+      $("#product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+      $("#eyescript").mask("~9.99 ~9.99 999");
+   });
+// ]]&gt;</script>	
+
+
+</body>
+</html>
+
+
+<!--/*
+http://avtomat5/index.php?option=com_xmap&sitemap=1 
+
+
+
+<div class="formCaption2">{ContactBy copy:caption}</div>
+
+		<div class="formBodyq">{ContactBy copy:body}<span class="formClr">{ContactBy copy:validation}</span></div>*/-->
+	
+	<?php    }	?>  
+  <!--конец -->
+---------------------------
+
+
+
+@charset "utf-8";
+/* /joomte CSS Document АВТОМАТ8 ++*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+html {
+height: 100%;
+font-family:Arial, Helvetica, sans-serif;
+background-color:#FFFFFF;
+position: relative;
+
+}
+
+body {
+  line-height: 1;
+  background-color: #FFFFFF;
+  height: 100%;
+  min-width:100px;
+  font-family: "Myriad Pro",tahoma,arial,verdana,sans-serif,Lucida Sans;
+  position: relative;  
+  opacity:0;
+      }
+
+body a{
+text-decoration:none;
+color:#335EA8;  
+}
+body a:visited{
+color: ;  
+}
+
+
+
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+  outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+  text-decoration: none;
+}
+del {
+  text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+li {
+  list-style: none;
+}
+
+
+.menuavtor1 li{
+	margin-top: 20px;}
+
+
+/*------консультант онлайнт-------*/
+#chat {
+position:fixed;
+top:49%;
+right:0;
+z-index:5;
+    }
+
+
+
+
+/*       верхушка         */
+#header {
+width:100%;
+background-image:url(../images/heder.png);
+height:84px;
+
+    }
+
+#logo {
+width:290px;
+font-family: "Myriad Pro";
+margin-left:60px;
+padding-top:20px;
+font-weight:bold;
+font-size:37px;
+color: #335ea8;
+
+float:left;
+  }
+
+
+#tele {
+width:290px;
+height:20px;
+float: right;
+right:1px;
+font-family: "Myriad Pro";
+margin-left:60px;
+padding-top:20px;
+font-weight:bold;
+font-size:37px;
+color: #ffffff;}
+
+#logo a{
+color: #335ea8;  
+}
+#tele a{
+color: #FFFFFF;  
+}
+    
+    
+/*    ВТОРАЯ ВЕРХУШКА   */    
+    
+
+#headers {
+width:100%;
+height:39px;
+background-color: #FFFFFF;
+    }
+    
+#headera {
+margin:0 0 auto auto;
+background-color:#e9edf1;
+width:823px;
+height:39px;
+text-align:right;
+padding-right:27px;
+line-height:35px;
+color:#607387;
+font-family: "Myriad Pro";
+font-size:23px;
+font-weight:bold;
+    }
+#headera a{
+color:#607387;
+font-family: "Myriad Pro";
+font-size:23px;
+font-weight:bold;
+    }
+
+
+
+/*       лево       */
+
+#left {
+width:240px;
+float:left;
+
+
+    }
+
+#lefta, #leftb {
+margin-left:30px;
+padding-right:10px;
+		}
+		
+#lefta a , #leftb a{
+color:#335ea8;
+text-decoration:none;
+font-size:23px;
+line-height:30px;
+		}
+
+#leftb .menuavtor1 a{
+color:#335ea8;
+text-decoration: underline;
+font-size:20px;
+line-height:20px;
+		}
+
+#leftb .menuavtor1 .item-162 a{
+	color:#F00;
+	}				
+				
+#lefta a:hover, #leftb a:hover{
+color:#0685E2;
+font-size:25px;
+border-bottom:1px  dotted #0685E2;
+	}
+            
+#leftb .menuavtor1 a:hover{
+color:#0685E2;
+font-size: 20px;
+border-bottom:1px  dotted #0685E2;
+	} 
+        
+
+/*      центр  контент    */
+
+
+#contener {
+width:515px;
+border:#adb8c2 2px solid;
+float:left;
+padding:0 20px 0 20px;
+line-height:25px;
+margin-bottom:0;
+text-indent: 30px;}      
+
+#contener2 {
+width:806px;
+border:#adb8c2 2px solid;
+float:left;
+padding:0 20px 0 20px;
+line-height:25px;
+margin-bottom:0;
+text-indent: 30px;}  
+      
+#contener a{
+text-decoration:none;}
+
+.formClr {
+margin-bottom:10px;
+    }  
+
+.formClr {
+margin-bottom:10px;
+    }
+.formBodyq {
+color:#FF0000;
+text-align:left;
+margin-left:40%;
+    } 
+
+#glavn{
+padding-top:35px;
+  }
+#glavn h1{
+color:#335EA8;
+font-weight:bold;
+font-size:20px;
+margin-bottom:20px;
+}
+#glavn h2{
+text-align:center;
+margin-bottom:10px;
+
+
+}
+
+
+#qwe {
+margin-top:30px;
+    }
+
+    
+#contener .componentheading {
+font-weight:bold;
+margin-bottom:10px;
+
+    }
+
+#contener .contentpane
+{line-height:25px;    }
+
+#contener .contentpane a{
+margin-left:10px;
+text-decoration:none;
+
+    }    
+
+#contener .contentpane a:hover{
+font-weight:bold;
+    }
+
+
+#ttt {    
+    text-align:left;
+    font-size: 12px;
+    height: 120px;
+    overflow: auto;
+    padding-left: 25px;
+  width:500px;
+  }  
+#rsform_6_page_0 .formCaption2 .formRequired{
+color: #FFFFFF;
+}
+
+
+.qwqw  {
+text-align:left !important;
+margin-left:35%;  
+   }
+.freelance {
+text-align:left;  
+margin-left:35%;
+margin-top:10px;
+   }  
+
+.payment, .q3q3, .q4q4, .q7q7{
+text-align:left;  
+margin-left:35%;
+margin-top:10px;
+   }
+.q1q1{
+text-align:left;
+margin-left:35%;
+
+   }  
+  
+.formCaption2 {
+font-weight:bold;
+margin-bottom:5px;
+font-family: arial;
+font-size: 90%;
+   }  
+
+.rsform-select-box  {
+width:385px !important;
+line-height: 50px;  
+
+}  
+
+.rsform-select-box option {
+
+font-variant:small-caps;
+font-size:16px;
+}    
+.rsform-select-box  li{
+height:40px;
+
+}  
+
+#rsform_6_page_3
+
+.rsform-select-box{
+text-align:left;
+width:550px;}
+
+/*#rsform_2_page_3 li */
+
+  
+
+  
+/*    право     */
+#right {
+width:291px;
+float:left;
+    }  
+    
+.tri {
+font-style:italic;
+
+    }    
+    
+      
+#righta {
+border-right:#adb8c2 2px solid;
+border-top:#adb8c2 2px solid;
+border-bottom:#adb8c2 2px solid;
+font-size:18px;
+color: #777777;
+height:70px;
+padding-top:30px;
+text-align:center;
+    }  
+    
+#righta h3{
+font-size:25px;
+color: #FF0000;
+margin-bottom:5px;
+    }
+#righta h3:hover{
+font-size:27px;
+color: #FF0000;
+margin-bottom:5px;
+    }    
+#righta  a{
+color: #607387;
+
+    }  
+
+
+
+#righta2 {
+border-right:#adb8c2 2px solid;
+border-bottom:#adb8c2 2px solid;
+font-size:18px;
+color: #777777;
+height:53px;
+padding-top:25px;
+text-align:center;
+    }  
+    
+#righta2 h3{
+font-size:20px;
+color: #FF0000;
+    }
+#righta2 h3:hover{
+margin-top:-5px;
+font-size:29px;
+color: #FF0000;
+
+    }    
+#righta2  a{
+color: #607387;
+
+    }
+
+
+
+                
+#rightb {
+padding-top:35px;
+padding-bottom:35px;
+text-align:center;
+
+
+    }      
+#rightb h3{
+font-size:23px;
+color: #FF9000;
+line-height:25px;
+
+
+    }      
+#rightb h3:hover{
+font-size:26px;
+
+
+  }  
+
+
+#rightb  a{
+color: #607387;
+    }  
+
+    
+    
+  
+#tex {
+width:100%;
+clear: both;
+color: #2C2C2C;
+
+margin-top:5px;
+margin-bottom:5px;
+
+    }  
+    
+/*------начало-------*/
+
+#all {
+width:1090px;
+margin:0 auto;
+z-index:1;
+display: block;
+
+    }  
+    
+/*  футер    */    
+
+#footer {
+
+margin:0 auto;
+
+padding-bottom:15px;
+text-align:center;
+width:1090px;
+clear:both !important;
+position: relative;
+display: block;
+z-index:0;}
+
+
+
+#footer a:visited{
+color:#335EA8;}    
+    
+#footer h3{
+margin-top:10px;
+margin-bottom:10px;
+margin-left:20px;}  
+    
+.moduletableaaa .href{
+  height: 203px;
+    left: 0;
+  padding: 0 0 0 100px;
+    text-decoration: none;
+    top: 0;
+  width: 17px;
+    z-index: 1;
+  margin-left:780px;
+  float:none;
+    }
+
+
+    
+/*           в с е    ос тальные */  
+#zaivka {
+text-align:center;
+margin:20px 0 20px 0;
+    }    
+#zaivka a:hover{
+font-weight:bold;
+
+    }
+#cal5_0Container, #cal11_0Container {
+color:#FF0000;
+text-align:center;
+margin-left:25%;
+    }  
+
+
+    
+#zaivka a{
+font-size:24px;
+color:#335EA8;
+    }        
+#zaivka a:visited{
+color:#335EA8;
+    }
+
+
+.list1  h1{
+color:#335EA8;
+margin-top:15px;
+margin-bottom:15px;
+font-size:18px;
+font-weight:bold;
+    }  
+  
+.list1  {
+color: #000000;
+font-size:15px;
+font-weight: 100;
+    }      
+.list1  p{
+margin-top:15px;
+    }      
+.list1  strong{
+font-weight:bold;
+    }
+
+.list2  {
+color: #335EA8;
+font-size:16px;
+padding:0 10px 10px 10px;
+background-color:#DEE5EB;
+line-height:27px;
+}      
+
+.list2  p{
+margin-top:15px;
+    }          
+    
+    
+
+.list3  {
+color: #335EA8;
+float:right;
+font-size:18px;
+padding:0 10px 10px 10px;
+background-color:#DEE5EB;
+line-height:27px;
+margin-left:20px;
+margin-bottom:10px;
+text-indent: 0px;
+}      
+
+.list3  a{
+color:#FF0000;
+font-size:20px;
+height:30px;
+}  
+
+.list3  a:hover{
+color:#FF0000;}              
+.list3  a:visited{
+color:#FF0000;}      
+
+
+
+
+    
+#one, #tri, #pia, #cim, #devia, #che, #she, #vosim, #two {
+height:180px;
+width:164px;
+border:#ADB8C2 solid 1px;  
+}  
+
+#one, #tri, #pia, #cim, #devia, #che, #she, #vosim, #two  {
+padding:0 10px 0 10px;
+}
+
+#one:hover, #tri:hover, #pia:hover, #cim:hover, #devia:hover, #two:hover, #che:hover, #she:hover, #vosim:hover  {
+background-image: url(555.png);
+background-repeat:no-repeat;
+
+  }
+  
+#one a, #tri a, #pia a, #cim a, #devia a, #two a, #che a, #she a, #vosim a {
+  display: block;
+  text-align:center;
+  height:133px;
+    width: 184px;
+    z-index: 1;
+  color:#777777;
+  z-index:2;
+    display: block;
+    z-index: 1;
+  padding-top:40px;
+  margin-top:-40px;
+  margin-left:-10px;
+
+  
+  }
+#pia h3   {display: block;
+  text-align:center;
+    
+  height:1px;
+    width: 1px;
+    z-index: 1;
+
+  z-index:1;
+  }
+
+
+
+
+#vise2 {
+margin-left:-21px;
+margin-top:-1px;
+font-size:16px;
+text-align:center;
+color:#777777;
+text-indent: 0px;
+  }
+#vise2  h3{
+font-size:25px;
+color:#335ea8;
+margin-bottom:10px;
+    }  
+
+
+.moduletablekarta{
+font-size:14px;
+padding-left:50px;
+text-align:left;}
+
+.moduletablekarta a{
+text-align: left;
+}
+
+
+
+
+/*       */    
+
+    
+#leftb h3{
+margin-top:45px;
+font-size:21px;
+color: #335ea8;
+height:60px;
+background-color: #dee5eb;
+text-align:center;
+margin-bottom:10px;
+line-height:25px;
+font-weight:100;
+    }    
+
+
+#rightc { 
+margin-top:15px;
+text-align:center;
+line-height:22px;
+font-size:17px;
+    }
+    
+#rightc h3{
+background-color:#e9edf1;
+font-size:23px;
+color: #607387;
+font-weight:100;
+height:38px;
+line-height:38px;
+margin-bottom:10px;
+    }
+#rightc a{
+text-decoration:none;
+color:#777777;
+    }
+#rightc a:hover{
+font-weight:bold;
+}            
+    
+#tabb {
+width:520px;
+text-align:center;
+    }  
+    
+.nazv {
+font-weight:bold;
+margin-top:10px;
+    }  
+    
+#zagl {
+font-size:18px;
+text-align:center;
+color:#FF0000;
+    }
+#zagl a:hover{
+color:#FF0000;
+font-size:24px;
+    }
+    
+#zakaz  {
+color:#FF0000;
+font-size:24px;
+margin-left:10px
+    }  
+    
+/* форма заказа для автора */    
+            
+.formFieldset {
+line-height:20px;
+width: 515px;
+}
+formDescription{
+width: 395px;
+}
+    
+.formContainer {
+width: 515px;
+text-align:center;
+}  
+
+.formBody {
+text-align: center;
+width:515px;}      
+
+.yui-calcontainer {
+text-align: center;
+margin: 20px  auto 20px 130px;
+font-size:15px;
+text-indent: 0px;
+
+}
+
+
+
+
+
+
+.otz{
+text-align: left;
+padding-left:50px;
+padding-top:20px;
+margin-top:20px;
+border-top:  #999999 dotted  1px;
+}
+.hh3{
+font-size:25px;
+color: #335EA8;
+font-weight:bold;
+
+}
+
+
+.blago {
+padding:15% 0 15% 0;
+text-align:center;
+font-size:20px;
+font-style:italic;
+line-height:35px;
+}
+
+
+
+#Submit {
+font-size:110%;
+color:#FF0000;
+}
+
+#Submit:hover {
+font-size:120%;
+color:#FF0000;
+}
+
+.formatit {
+font-size:20px;
+line-height:35px;
+color: #335EA8;
+font-weight:bold;
+}
+
+ 
+
+.list3:hover {
+  transform: scale(1.2);
+-webkit-transform: scale(1.2);
+-moz-transform: scale(1.2);
+-o-transform: scale(1.2);
+}
+
+.editlinktip hasTip {
+color:#FF0000;
+font-size:20px;
+
+}
+
+.aaa{
+background-image: url(ss1.png);
+background-repeat: no-repeat;
+height:100px;
+width:100px;
+}
+
+.karta{
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  
+}
+
+
+  .rollover2 {
+    background: url(karta2.png);
+  background-repeat:no-repeat;
+  height:213px;
+  width:291px;
+  border: #666666 2px  solid;
+   
+   }
+ .levo2 {
+ text-align:left;
+ text-indent: 0px;
+    
+   }
+ 
+.bigg {
+font-weight:bold;
+font-size: 20px;    
+   }
+ 
+.cennterr {
+text-align: center;
+font-weight:bold;   }
+
+.PROVERKAA3 {
+width: 40%;  float: left;
+text-align:left;
+text-indent: 0;
+margin-left: 10%;
+font-style: italic;}
+
+.tab1{
+text-align: center;
+float:left;
+width:100%;
+   }
+.tab11{
+margin-left: 10px;
+float:left;
+
+
+   }
+.tab12{
+font-weight:bold;
+margin-left: 10px;
+float:left;
+   }
+   
+.tab12 a{   
+font-style:italic;
+
+ }
+
+.tab2{
+text-align: center;
+float:left;
+width:50%;
+   }
+
+.tabV:hover{
+width: 100%; /* Ширина таблицы */
+height: auto; /* Высота таблицы */   
+color: ;
+background-color: #D2DCE8;
+z-index: 9999;
+overflow: auto;
+   }
+   
+.tabV a{
+    color: #000 !important;
+}
+.blye {
+    color: #335EA8;
+}
+
+
+
+.tab3{
+text-align:  left;
+float:left;
+width:100%;
+   }
+.tabCe{
+padding-top:15px;
+text-align: center;
+clear: both;
+overflow: auto;
+   }
+
+.tab4{
+text-align:  left;
+float:left;
+width:100%;
+font-style:italic;
+   }
+.tab41{
+font-weight:bold;
+  }
+  
+.tab42{
+font-weight:bold;
+text-align:center;
+width:100%;
+
+  }
+.tab5{
+    height: 40px;
+font-weight:bold;
+text-align: left;
+
+width:100%;
+   
+
+  }
+
+/*.leftx{
+    width: 30%;
+    text-align: center;
+  }*/
+  
+  
+.menu-niz {
+    margin-top: 20px;
+    height: 40px;
+  
+          }
+      
+ .provw {
+    width:  auto;
+    float: left;
+    font-weight: bold;
+    font-size: 20px;
+      }    
+.mall {
+    font-size: 13px;
+    font-weight: 100;
+    font-style: italic;
+    margin-left: 10px;
+      }    
+.yes {
+  margin: 0;
+  padding: 0;
+  border: 2px solid #ADB8C2;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+
+.delInput:hover, .addMore:hover {
+    cursor:pointer;
+}
+
+.delInput, .addMore {
+   background: none repeat scroll 0 0 #7F9AC7;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 150px;
+    text-indent: 0;
+    color: white;
+}
+	#qq11.rsform-upload-box{
+	   color: black;
+	}
+	.info_file{
+	   color: blue;
+       font-size: 130%;
+	}
+	#all #left  li.current  {
+	background-color:#345DA6; 
+	color: #FFF;
+	padding:5px 10px;
+	border-radius:8px;}
+
+ 
+#all #left .current  a{	 
+	color: #FFF;
+	}
+
+    #headermenu a{
+    color: hsl(218, 53%, 43%);
+    font-size: 23px;
+    line-height: 30px;
+    text-decoration: none;    
+    font-weight:bold;
+    }
+    
+ #headermenu li{
+    float: left;
+    margin-left: 10px;    
+    padding: 10px 10px 10px 10px;
+ }   
+    
+    
+   #mailto {
+    padding-top: 8px;
+   }
+    
+   .ligh p{
+     font-size: 18px;
+   } 
+    
+   .item-page > p > strong {
+    font-size: 20px;
+    color: #335EA8;
+   }
+    
+    fieldset.formFieldset {
+        margin: 0 auto;
+    }
+-----
